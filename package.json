@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/wd/react-native-amap-kit#readme",
   "peerDependencies": {
-    "react-native": "^0.47"
+    "react-native": ">=0.47"
   },
   "devDependencies": {
     "@types/react": "^16.7.17",
