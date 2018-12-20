@@ -97,6 +97,11 @@ TBD.
 * @hxl https://github.com/haoxinlei1994
 * @dgh 
 
+# TODO
+* 示例项目增加更多例子。
+* 支持通过 childProps 方式添加图形。
+* 升级地图 sdk 到最新到版本。
+
 # 其他项目
 * https://github.com/qiuxiang/react-native-amap3d
 * https://github.com/react-native-component/react-native-smart-amap
