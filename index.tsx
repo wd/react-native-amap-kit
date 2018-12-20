@@ -119,35 +119,35 @@ export interface CommonProps {
     //  ios         0           1
     //  android     1           2
     style: StyleProp<ViewStyle>
-    mapType?: 0|1|2;
-    showsUserLocation?: boolean;
-    bearing?: number;
-    tilt?: number;
+    mapType?: 0|1|2; //地图样式
+    showsUserLocation?: boolean; //是否显示中心点
+    bearing?: number; //地图旋转角度
+    tilt?: number; //地图倾斜角度
     // 设置地图视图类型 0 是 MapView 1 是 TextureMapView，默认是 0
     mapViewType?: 0|1;
-    centerCoordinate?: Coordinate;
-    customMapStyleFileName?: string;
-    zoomLevel?: number;
-    onDidMoveByUser?: (event: MoveByUserEvent) => void;
-    onSingleTapped?: (evnet: TapEvent) => void;
-    onLongTapped?: (evnet: TapEvent) => void;
-    onMapZoomChange?: (event: ZoomChangeEvent) => void;
-    onAnnotationDragChange?: (event: AnnotationDragChangeEvent) => void;
-    onAnnotationClick?: (event: AnnotationClickEvent) => void;
-    circles?: Circle[];
-    markers?: Marker[];
-    polygons?: Polygon[];
-    polylines?: Line[];
-    region?: Region;
+    centerCoordinate?: Coordinate; //设置地图中心点
+    customMapStyleFileName?: string; //设置地图样式
+    zoomLevel?: number; //地图缩放比例
+    onDidMoveByUser?: (event: MoveByUserEvent) => void; //挪动地图事件
+    onSingleTapped?: (evnet: TapEvent) => void; //点击地u事件
+    onLongTapped?: (evnet: TapEvent) => void; //长按地图事件
+    onMapZoomChange?: (event: ZoomChangeEvent) => void; //地图缩放比例改变事件
+    onAnnotationDragChange?: (event: AnnotationDragChangeEvent) => void; //Marker 被拖动事件
+    onAnnotationClick?: (event: AnnotationClickEvent) => void; //Marker 点击事件
+    circles?: Circle[]; //地图上面画圆形
+    markers?: Marker[]; //地图上画点标记
+    polygons?: Polygon[]; //地图上画多边形
+    polylines?: Line[]; //地图上画折线
+    region?: Region; //设置地图可视区域
 }
 
 export interface AndroidProps {
-    scaleControls?: boolean;
-    tiltGestures?: boolean;
-    rotateGestures?: boolean;
-    infoWindowClass?: boolean;
-    onAttachedToWindow?: () => void;
-    onInfoWindowClick?: (event: InfoWindowClickEvent) => void;
+    scaleControls?: boolean; //是否显示缩放按钮
+    tiltGestures?: boolean; //是否允许用户倾斜地图
+    rotateGestures?: boolean; //是否允许用户旋转地图
+    infoWindowClass?: boolean; //自定义 InfoWindow 样式的 class 名
+    onAttachedToWindow?: () => void; //地图 ready 事件
+    onInfoWindowClick?: (event: InfoWindowClickEvent) => void; // InfoWindow 点击的时候触发的事件
 }
 
 export interface SetLatLngZoomParams {

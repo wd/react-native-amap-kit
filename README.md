@@ -1,6 +1,16 @@
 # react-native-amap-kit
 高德地图的 RN 扩展，支持各种图形，搜索，自定义 view 等。 最初的代码来自 [react-native-smart-amap](https://github.com/react-native-component/react-native-smart-amap) ，现在已经改动了很多了，那个项目似乎也没人维护了，所以起了一个新的名字发布出来。
 
+支持的功能简单描述一下：
+* 使用 typescript，定义了 types。
+* 使用 3D 地图， 高德 2D 地图已经不怎么更新了，并且自定义地图样式只支持是 3D 地图。
+* 支持通过设置 `props` 方式画图，或者通过 `this._amap.setCirle()` 这样的方式画图。
+* 支持设置地图的自定义样式
+* Android 支持设置自定义的浮动窗口，这个只实现了 android，实现方式也不灵活，后面可能会参考 [react-native-amap3d](https://github.com/qiuxiang/react-native-amap3d) 做一个重构。
+* 支持地图查询和搜索
+
+具体可以看看 `index.tsx` 里面 `CommonProps` 和 `AndroidProps` 的定义。
+
 # 安装
 ```
 $ yarn add react-native-amap-kit
@@ -77,3 +87,16 @@ $ react-native link react-native-amap-kit
 ```
 
 # 使用
+
+可以参考 [react-native-amap-kit-example](https://github.com/wd/react-native-amap-kit-example) 这个项目。
+
+TBD.
+
+# Authors
+* @wd https://github.com/wd
+* @hxl https://github.com/haoxinlei1994
+* @dgh 
+
+# 其他项目
+* https://github.com/qiuxiang/react-native-amap3d
+* https://github.com/react-native-component/react-native-smart-amap
