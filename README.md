@@ -92,6 +92,13 @@ $ react-native link react-native-amap-kit
 
 TBD.
 
+# 升级
+
+```
+$ yarn add react-native-amap-kit
+$ cd ios && rm Podfile.lock && pod install
+```
+
 # Authors
 * @wd https://github.com/wd
 * @hxl https://github.com/haoxinlei1994
