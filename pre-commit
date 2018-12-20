@@ -1,0 +1,9 @@
+#!/bin/sh
+
+has_ts_file=`git diff --cached --name-status | awk '$1 != "D" { print $2 }' | grep '.ts$' |wc -l`
+
+exec 1>&2
+
+if [ "$has_ts_file" -ge '1' ];then
+    yarn tsc --noEmit
+fi
