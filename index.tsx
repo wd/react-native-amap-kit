@@ -1,10 +1,3 @@
-/*
- * A smart AMap Library for react-native apps
- * https://github.com/react-native-component/react-native-smart-amap/
- * Released under the MIT license
- * Copyright (c) 2016 react-native-component <moonsunfall@aliyun.com>
- */
-
 import React, {
     Component,
 } from 'react'
