@@ -5,13 +5,13 @@
 ```
 $ yarn add react-native-amap-kit
 $ react-native link react-native-amap-kit
+```
 
 ## iOS
 需要先配置 CocoaPods。然后在 `ios/Podfile` 里面添加下面两个设置
 
 ```
-    pod 'react-native-amap-kit', path: '../node_modules/react-native-amap-kit/ios'  ### add this line
-
+    pod 'react-native-amap-kit', path: '../node_modules/react-native-amap-kit/ios'
 ```
 和
 ```
@@ -31,7 +31,7 @@ $ react-native link react-native-amap-kit
     end
   end
 ```
-这里有一个例子 https://github.com/wd/react-native-amap-kit-example/tree/master/ios 。
+这里有一个例子 https://github.com/wd/react-native-amap-kit-example/blob/master/ios/Podfile 。
 
 ## Android
 不需要做其他事情了。
