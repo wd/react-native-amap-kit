@@ -1,0 +1,15 @@
+*.[aod]
+*.DS_Store
+.DS_Store
+*Thumbs.db
+*.iml
+.gradle
+.idea
+node_modules
+npm-debug.log
+yarn-error.log
+lib/
+/android/build
+/ios/**/*xcuserdata*
+/ios/**/*xcshareddata*
+.tern-*
