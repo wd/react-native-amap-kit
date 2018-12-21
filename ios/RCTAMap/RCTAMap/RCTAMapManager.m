@@ -16,7 +16,7 @@
 #import "RCTPolygon.h"
 #import "UIImage+Rotate.h"
 #import "NSMutableDictionary+AMap.h"
-#import "RCTWeatherAnnotation.h"
+#import "RCTCustomAnnotation.h"
 #import "UIColor+utility.h"
 
 
@@ -480,15 +480,18 @@ RCT_EXPORT_METHOD(maxZoomLevel:(nonnull NSNumber *)reactTag :(RCTResponseSenderB
     }
     if ([annotationConfig objectForKey: @"customView"]) {
         NSDictionary *customViewProps = [annotationConfig objectForKey: @"customViewProps"];
+        
         NSNumber *isToTop = [annotationConfig objectForKey: @"isToTop"];
-        RCTWeatherAnnotation *weatherAnno = [[RCTWeatherAnnotation alloc] initWithKey: key
+        RCTCustomAnnotation *customAnno = [[RCTCustomAnnotation alloc] initWithKey: key
                                                                            coordinate: CLLocationCoordinate2DMake(latitude, longitude)];
+        customAnno.customViewName = [annotationConfig objectForKey: @"customView"];
+        
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict addEntriesFromDictionary: customViewProps];
         [dict setObject:isToTop forKey: @"isToTop"];
-        weatherAnno.customProps = dict;
-        [mapViewContainer.annotDict setObject:weatherAnno forKey: key];
-        [mapViewContainer.mapView addAnnotation: weatherAnno];
+        customAnno.customProps = dict;
+        [mapViewContainer.annotDict setObject: customAnno forKey: key];
+        [mapViewContainer.mapView addAnnotation: customAnno];
 
     } else {
         NSString *title = [annotationConfig objectForKey:@"title"];
@@ -1174,38 +1177,45 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
 
 
         return annotationView;
-    } else if(([annotation isKindOfClass:[RCTWeatherAnnotation class]])) {
+    } else if(([annotation isKindOfClass:[RCTCustomAnnotation class]])) {
         static NSString *reusedId = @"weather";
-        RCTWeatherAnnotation *weatherAnno = (RCTWeatherAnnotation *)annotation;
+        RCTCustomAnnotation *customAnno = (RCTCustomAnnotation *)annotation;
 
-        MAAnnotationView *weatherAnnoView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier: reusedId];
+        MAAnnotationView *customAnnoView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier: reusedId];
 
-        if (weatherAnnoView == nil) {
-            weatherAnnoView = [[[NSClassFromString(@"RCTWeatherAnnotationView") class] alloc] initWithAnnotation: weatherAnno reuseIdentifier: reusedId];
+        if (customAnnoView == nil) {
+            NSString *customViewName = customAnno.customViewName;
+            Class customViewClass = NSClassFromString(customViewName);
+            if (customViewClass == nil) {
+                return nil;
+            }
+            customAnnoView = [[[customViewClass class] alloc] initWithAnnotation: customAnno reuseIdentifier: reusedId];
         }
 
-        weatherAnnoView.annotation = weatherAnno;
+        customAnnoView.annotation = customAnno;
 
-        return weatherAnnoView;
+        return customAnnoView;
     }
 
     return nil;
 }
 
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
-    if ([view isKindOfClass: [NSClassFromString(@"RCTWeatherAnnotationView") class]]) {
+    
+    if ([view.annotation isKindOfClass: [RCTCustomAnnotation class]]) {
+        
         [view setSelected: YES animated: YES];
         if (!self.mapViewContainer.onAnnotationClick) {
             return;
         }
 
-        RCTWeatherAnnotation *weatherAnno = view.annotation;
-        self.mapViewContainer.onAnnotationClick(@{@"customViewProps": weatherAnno.customProps});
+        RCTCustomAnnotation *customAnno = view.annotation;
+        self.mapViewContainer.onAnnotationClick(@{@"customViewProps": customAnno.customProps});
     }
 }
 
 - (void)mapView:(MAMapView *)mapView didDeselectAnnotationView:(MAAnnotationView *)view {
-    if ([view isKindOfClass: [NSClassFromString(@"RCTWeatherAnnotationView") class]]) {
+    if ([view.annotation isKindOfClass: [RCTCustomAnnotation class]]) {
         [view setSelected: NO animated: YES];
     }
 }
@@ -1215,10 +1225,10 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
         return ;
     }
     MAAnnotationView *annotationView = [views lastObject];
-    RCTWeatherAnnotation *weatherAnno = annotationView.annotation;
-    if([weatherAnno isKindOfClass:[RCTWeatherAnnotation class]]
-       && [[weatherAnno.customProps objectForKey: @"isToTop"] boolValue]) {
-        [mapView selectAnnotation: weatherAnno animated: YES];
+    RCTCustomAnnotation *customAnno = annotationView.annotation;
+    if([customAnno isKindOfClass:[RCTCustomAnnotation class]]
+       && [[customAnno.customProps objectForKey: @"isToTop"] boolValue]) {
+        [mapView selectAnnotation: customAnno animated: YES];
     }
 }
 
