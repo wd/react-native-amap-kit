@@ -1,12 +1,13 @@
 {
   "name": "react-native-amap-kit",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "AMAP for react native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "precommit": "./pre-commit"
+    "precommit": "./pre-commit",
+    "prepublishOnly": "yarn tsc"
   },
   "pre-commit": [
     "precommit"
