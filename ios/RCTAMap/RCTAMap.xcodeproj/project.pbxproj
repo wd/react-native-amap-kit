@@ -16,7 +16,7 @@
 		8551A4AC1FC598E400970529 /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8551A4AA1FC598E400970529 /* UIImage+Rotate.m */; };
 		856CED0E1FBD8BE3008BD754 /* RCTPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = 856CED0D1FBD8BE3008BD754 /* RCTPolygon.m */; };
 		85BF291A1FDA3C5400115DDC /* NSMutableDictionary+AMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 85BF29191FDA3C5400115DDC /* NSMutableDictionary+AMap.m */; };
-		85E022CF211D6C9300E63555 /* RCTWeatherAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E022CE211D6C9300E63555 /* RCTWeatherAnnotation.m */; };
+		85C80EE521CC94C600BBC0C5 /* RCTCustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 85C80EE421CC94C600BBC0C5 /* RCTCustomAnnotation.m */; };
 		85E022D2211D740300E63555 /* UIColor+utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E022D1211D740300E63555 /* UIColor+utility.m */; };
 		9F12EBCB1DD30C6600029EAF /* RCTAMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F12EBCA1DD30C6600029EAF /* RCTAMapManager.m */; };
 		9F12EBCC1DD30C6600029EAF /* RCTAMapManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F12EBC91DD30C6600029EAF /* RCTAMapManager.h */; };
@@ -52,8 +52,8 @@
 		856CED0D1FBD8BE3008BD754 /* RCTPolygon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPolygon.m; sourceTree = "<group>"; };
 		85BF29181FDA3C5400115DDC /* NSMutableDictionary+AMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+AMap.h"; sourceTree = "<group>"; };
 		85BF29191FDA3C5400115DDC /* NSMutableDictionary+AMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+AMap.m"; sourceTree = "<group>"; };
-		85E022CD211D6C9300E63555 /* RCTWeatherAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTWeatherAnnotation.h; sourceTree = "<group>"; };
-		85E022CE211D6C9300E63555 /* RCTWeatherAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTWeatherAnnotation.m; sourceTree = "<group>"; };
+		85C80EE321CC94C600BBC0C5 /* RCTCustomAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTCustomAnnotation.h; sourceTree = "<group>"; };
+		85C80EE421CC94C600BBC0C5 /* RCTCustomAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTCustomAnnotation.m; sourceTree = "<group>"; };
 		85E022D0211D740300E63555 /* UIColor+utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+utility.h"; sourceTree = "<group>"; };
 		85E022D1211D740300E63555 /* UIColor+utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+utility.m"; sourceTree = "<group>"; };
 		9F12EBC61DD30C6600029EAF /* libRCTAMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTAMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,8 +115,8 @@
 				9FB04D891DD9987100A577E9 /* RCTAMap.m */,
 				854FF4941F28C20400EA6A44 /* RCTAnnotation.h */,
 				854FF4951F28C20400EA6A44 /* RCTAnnotation.m */,
-				85E022CD211D6C9300E63555 /* RCTWeatherAnnotation.h */,
-				85E022CE211D6C9300E63555 /* RCTWeatherAnnotation.m */,
+				85C80EE321CC94C600BBC0C5 /* RCTCustomAnnotation.h */,
+				85C80EE421CC94C600BBC0C5 /* RCTCustomAnnotation.m */,
 				854FF4971F28C2E700EA6A44 /* RCTCircle.h */,
 				854FF4981F28C2E700EA6A44 /* RCTCircle.m */,
 				854FF49A1F28EFAA00EA6A44 /* RCTPolyline.h */,
@@ -191,8 +191,8 @@
 				85BF291A1FDA3C5400115DDC /* NSMutableDictionary+AMap.m in Sources */,
 				854FF4991F28C2E700EA6A44 /* RCTCircle.m in Sources */,
 				9FB04D8A1DD9987100A577E9 /* RCTAMap.m in Sources */,
+				85C80EE521CC94C600BBC0C5 /* RCTCustomAnnotation.m in Sources */,
 				9F12EBCB1DD30C6600029EAF /* RCTAMapManager.m in Sources */,
-				85E022CF211D6C9300E63555 /* RCTWeatherAnnotation.m in Sources */,
 				854FF4961F28C20400EA6A44 /* RCTAnnotation.m in Sources */,
 				85E022D2211D740300E63555 /* UIColor+utility.m in Sources */,
 				856CED0E1FBD8BE3008BD754 /* RCTPolygon.m in Sources */,
