@@ -80,8 +80,10 @@ function safeCallback(callback: Function) {
 }
 
 export type MoveByUserEvent = NativeSyntheticEvent<{
-    data: {
-        centerCoordinate: CoordinateLong
+    nativeEvent: {
+        data: {
+            centerCoordinate: CoordinateLong
+        }
     }}>;
 
 export type TapEvent = NativeSyntheticEvent<{
