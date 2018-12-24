@@ -1178,7 +1178,7 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
 
         return annotationView;
     } else if(([annotation isKindOfClass:[RCTCustomAnnotation class]])) {
-        static NSString *reusedId = @"weather";
+        static NSString *reusedId = @"customAnnoViewReuseIndetifier";
         RCTCustomAnnotation *customAnno = (RCTCustomAnnotation *)annotation;
 
         MAAnnotationView *customAnnoView = (MAAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier: reusedId];
