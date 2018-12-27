@@ -101,8 +101,8 @@ $ cd ios && rm Podfile.lock && pod install
 
 # Authors
 * @wd https://github.com/wd
-* @hxl https://github.com/haoxinlei1994
-* @dgh 
+* @haoxinlei1994 https://github.com/haoxinlei1994
+* @chenmo230 https://github.com/chenmo230
 
 # TODO
 * 示例项目增加更多例子。

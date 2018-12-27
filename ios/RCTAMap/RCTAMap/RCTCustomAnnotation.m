@@ -1,14 +1,14 @@
 //
-//  RCTWeatherAnnotation.m
+//  RCTCustomAnnotation.m
 //  RCTAMap
 //
-//  Created by breeze deng on 2018/8/10.
+//  Created by breeze deng on 2018/12/21.
 //  Copyright © 2018 react-native-component. All rights reserved.
 //
 
-#import "RCTWeatherAnnotation.h"
+#import "RCTCustomAnnotation.h"
 
-@implementation RCTWeatherAnnotation
+@implementation RCTCustomAnnotation
 
 - (instancetype)initWithKey: (NSString *)key
                  coordinate:(CLLocationCoordinate2D)coordinate {
@@ -19,5 +19,6 @@
     
     return self;
 }
+
 
 @end

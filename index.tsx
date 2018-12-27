@@ -8,7 +8,8 @@ import {
     findNodeHandle,
     Platform,
     StyleProp,
-    ViewStyle
+    ViewStyle,
+    NativeSyntheticEvent
 } from 'react-native';
 
 const AMapManager = Platform.OS == 'ios' ? NativeModules.AMap : NativeModules.AMapModule;
@@ -78,42 +79,31 @@ function safeCallback(callback: Function) {
     return isFunction(callback) ? callback : function() {};
 }
 
-export interface MoveByUserEvent {
+export type MoveByUserEvent = NativeSyntheticEvent<{
     data: {
         centerCoordinate: CoordinateLong
-    }
-}
+    }}>;
 
-export interface TapEvent {
-    nativeEvent: {
+export type TapEvent = NativeSyntheticEvent<{
         coordinate: CoordinateLong
-    }
-}
+    }>
 
-export interface ZoomChangeEvent {
-    nativeEvent: {
+
+export type ZoomChangeEvent = NativeSyntheticEvent<{
         zoomLevel: number;
-    }
-}
+    }>
 
-export interface AnnotationDragChangeEvent {
-    nativeEvent: {
+export type AnnotationDragChangeEvent = NativeSyntheticEvent<{
         key: string;
         coordinate: CoordinateLong;
-    }
-}
-
-export interface AnnotationClickEvent {
-    nativeEvent: {
+    }>
+export type AnnotationClickEvent = NativeSyntheticEvent<{
         customViewProps: CustomViewProps
-    }
-}
+    }>
 
-export interface InfoWindowClickEvent {
-    nativeEvent: {
+export type InfoWindowClickEvent = NativeSyntheticEvent<{
         key: string
-    }
-}
+    }>
 
 export interface CommonProps {
     //          standart    satellite
