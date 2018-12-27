@@ -32,6 +32,12 @@ export interface Region {
     animate: boolean;
 }
 
+export interface RegionByLatLngs {
+    coordinates: any;
+    animate: boolean;
+    padding: any;
+}
+
 export interface CustomViewProps {
     imgName: string;
     addrName: string;
@@ -129,7 +135,7 @@ export interface CommonProps {
     markers?: Marker[]; //地图上画点标记
     polygons?: Polygon[]; //地图上画多边形
     polylines?: Line[]; //地图上画折线
-    region?: Region; //设置地图可视区域
+    region?: Region|RegionByLatLngs; //设置地图可视区域
 }
 
 export interface AndroidProps {
@@ -170,7 +176,7 @@ export default class AMap extends Component<CommonProps&AndroidProps> {
         AMapManager.setRegion(findNodeHandle(this), region)
     }
 
-    setRegionByLatLngs(region: Region[]) {
+    setRegionByLatLngs(region: RegionByLatLngs) {
         AMapManager.setRegionByLatLngs(findNodeHandle(this), region)
     }
 
