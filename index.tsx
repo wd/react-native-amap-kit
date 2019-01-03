@@ -104,7 +104,8 @@ export type AnnotationDragChangeEvent = NativeSyntheticEvent<{
         coordinate: CoordinateLong;
     }>
 export type AnnotationClickEvent = NativeSyntheticEvent<{
-        customViewProps: CustomViewProps
+        customViewProps: Marker;
+        index?: number
     }>
 
 export type InfoWindowClickEvent = NativeSyntheticEvent<{
