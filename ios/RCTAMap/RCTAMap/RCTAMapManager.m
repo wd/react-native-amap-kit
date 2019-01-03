@@ -26,8 +26,6 @@
 
 @property (nonatomic, strong) NSMutableSet *randomSet;
 
-@property (nonatomic, strong) RCTAMap *mapViewContainer;
-
 @end
 
 @implementation RCTAMapManager
@@ -76,7 +74,6 @@ RCT_EXPORT_MODULE(RCTAMap)
 - (UIView *)view {
     RCTAMap *mapViewContainer = [RCTAMap new];
     mapViewContainer.mapView.delegate = self;
-    self.mapViewContainer = mapViewContainer;
 
     self.search = [[AMapSearchAPI alloc] init];
     self.search.delegate = self;
@@ -479,20 +476,12 @@ RCT_EXPORT_METHOD(maxZoomLevel:(nonnull NSNumber *)reactTag :(RCTResponseSenderB
         key = [self generateKeyWithPrefix: @"Annot"];
     }
     if ([annotationConfig objectForKey: @"customView"]) {
-        NSDictionary *customViewProps = [annotationConfig objectForKey: @"customViewProps"];
-        
-        NSNumber *isToTop = [annotationConfig objectForKey: @"isToTop"];
         RCTCustomAnnotation *customAnno = [[RCTCustomAnnotation alloc] initWithKey: key
                                                                            coordinate: CLLocationCoordinate2DMake(latitude, longitude)];
         customAnno.customViewName = [annotationConfig objectForKey: @"customView"];
-        
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict addEntriesFromDictionary: customViewProps];
-        [dict setObject:isToTop forKey: @"isToTop"];
-        customAnno.customProps = dict;
+        customAnno.customProps = annotationConfig;
         [mapViewContainer.annotDict setObject: customAnno forKey: key];
         [mapViewContainer.mapView addAnnotation: customAnno];
-
     } else {
         NSString *title = [annotationConfig objectForKey:@"title"];
         NSString *imageName = [annotationConfig objectForKey: @"imageName"];
@@ -509,6 +498,8 @@ RCT_EXPORT_METHOD(maxZoomLevel:(nonnull NSNumber *)reactTag :(RCTResponseSenderB
         annotation.draggable = draggable;
         annotation.angle = angle;
         annotation.hasAngle = hasAngle;
+        
+        annotation.customProps = annotationConfig;
         [mapViewContainer.annotDict setObject:annotation forKey: key];
         [mapViewContainer.mapView addAnnotation: annotation];
     }
@@ -1083,8 +1074,9 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
  *  @param wasUserAction 标识是否是用户动作
  */
 - (void)mapView:(MAMapView *)mapView mapDidMoveByUser:(BOOL)wasUserAction {
-    if(wasUserAction && self.mapViewContainer.onDidMoveByUser) {
-        self.mapViewContainer.onDidMoveByUser(@{
+    RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
+    if(wasUserAction && mapViewContainer.onDidMoveByUser) {
+        mapViewContainer.onDidMoveByUser(@{
                                   @"data": @{
                                           @"centerCoordinate": @{
                                                   @"latitude": @(mapView.centerCoordinate.latitude),
@@ -1102,13 +1094,14 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
  *  @param wasUserAction 标识是否是用户动作
  */
 - (void)mapView:(MAMapView *)mapView mapDidZoomByUser:(BOOL)wasUserAction {
-    if (!self.mapViewContainer.onMapZoomChange) {
+    RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
+    if (!mapViewContainer.onMapZoomChange) {
         return;
     }
 
 
     double zoomLevel = mapView.zoomLevel;
-    self.mapViewContainer.onMapZoomChange(@{
+    mapViewContainer.onMapZoomChange(@{
                               @"zoomLevel": [NSNumber numberWithDouble:zoomLevel]
                              });
 
@@ -1121,12 +1114,13 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
  *  @param coordinate 点击位置经纬度
  */
 - (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    if (!self.mapViewContainer.onSingleTapped) {
+    RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
+    if (!mapViewContainer.onSingleTapped) {
         return;
     }
 
 
-    self.mapViewContainer.onSingleTapped(@{
+    mapViewContainer.onSingleTapped(@{
        @"coordinate": @{
            @"latitude": @(coordinate.latitude),
            @"longitude": @(coordinate.longitude),
@@ -1135,12 +1129,13 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
 }
 
 - (void)mapView:(MAMapView *)mapView didLongPressedAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    if (!self.mapViewContainer.onLongTapped) {
+    RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
+    if (!mapViewContainer.onLongTapped) {
         return;
     }
 
 
-    self.mapViewContainer.onLongTapped(@{
+    mapViewContainer.onLongTapped(@{
                              @"coordinate": @{
                                      @"latitude": @(coordinate.latitude),
                                      @"longitude": @(coordinate.longitude),
@@ -1167,8 +1162,8 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
         }
 
         annotationView.canShowCallout   = NO;
-        annotationView.draggable        = rctAnnotation.draggable;
-        annotationView.enabled          = rctAnnotation.draggable;
+//        annotationView.draggable        = rctAnnotation.draggable;
+//        annotationView.enabled          = rctAnnotation.draggable;
         if(rctAnnotation.hasAngle) {
             annotationView.image        = [[UIImage imageNamed: rctAnnotation.imageName] imageRotatedByDegrees: 360 -rctAnnotation.angle];
         } else {
@@ -1202,16 +1197,22 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
 
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
     
+    RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
     if ([view.annotation isKindOfClass: [RCTCustomAnnotation class]]) {
+        RCTCustomAnnotation *customAnno = view.annotation;
+        Boolean disableSelectable = [[customAnno.customProps objectForKey: @"disableSelectable"] boolValue];
+        if (disableSelectable) {
+            [mapView deselectAnnotation: view.annotation animated: YES];
+        } else {
+            [view setSelected: YES animated: YES];
+        }
         
-        [view setSelected: YES animated: YES];
-        if (!self.mapViewContainer.onAnnotationClick) {
+        if (!mapViewContainer.onAnnotationClick) {
             return;
         }
 
-        RCTCustomAnnotation *customAnno = view.annotation;
-        self.mapViewContainer.onAnnotationClick(@{@"customViewProps": customAnno.customProps});
-    }
+        
+        mapViewContainer.onAnnotationClick(@{@"customViewProps": customAnno.customProps});    }
 }
 
 - (void)mapView:(MAMapView *)mapView didDeselectAnnotationView:(MAAnnotationView *)view {
@@ -1240,14 +1241,15 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
  @param oldState 旧状态
  */
 - (void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view didChangeDragState:(MAAnnotationViewDragState)newState fromOldState:(MAAnnotationViewDragState)oldState {
-    if (!self.mapViewContainer.onAnnotationDragChange) {
+    RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
+    if (!mapViewContainer.onAnnotationDragChange) {
         return;
     }
 
     RCTAnnotation *annotation = (RCTAnnotation *)view.annotation;
     CLLocationCoordinate2D coordinate = annotation.coordinate;
 
-    self.mapViewContainer.onAnnotationDragChange(@{
+    mapViewContainer.onAnnotationDragChange(@{
                              @"key": annotation.key,
                              @"coordinate": @{
                                      @"latitude": @(coordinate.latitude),

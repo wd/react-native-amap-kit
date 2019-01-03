@@ -62,7 +62,7 @@
 /*!
  @brief 用户自定义信息
  */
-@property (nonatomic) id customInfo;
+@property (nonatomic, strong) NSDictionary *customProps;
 
 
 /**
