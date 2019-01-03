@@ -99,7 +99,7 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
     private float zoomLevel;
     private LatLng centerLocation;
     private String customMapStylePath;
-    private int mapViewType;
+    private int mapViewType = 1;
     private RCTInfoWindow infoWindowObj;
     private float bearing = -1;
     private float tilt = -1;
