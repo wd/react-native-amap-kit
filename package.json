@@ -1,6 +1,6 @@
 {
   "name": "react-native-amap-kit",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "AMAP for react native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
