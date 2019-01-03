@@ -99,17 +99,19 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
     private float zoomLevel;
     private LatLng centerLocation;
     private String customMapStylePath;
-    private int mapViewType;
+    private int mapViewType = 1;
     private RCTInfoWindow infoWindowObj;
     private float bearing = -1;
     private float tilt = -1;
     private boolean showUserLocation = true;
+    private boolean hasLoadMapView = true;
 
     public RCTAMapView(ThemedReactContext context) {
         super(context);
         this.CONTEXT = context;
         CenterView = new ImageView(context);
         PARAM = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        init();
     }
 
     @Override
@@ -125,7 +127,9 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
         super.onAttachedToWindow();
         Log.d("AMAP", "onAttachedToWindow");
 
-        init();
+        if (!hasLoadMapView){
+            init();
+        }
         isReady = true;
         draw();
         makeBearing();
@@ -394,6 +398,7 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
             mlocationClient.onDestroy();
             mlocationClient = null;
         }
+        hasLoadMapView = false;
         super.onDetachedFromWindow();
     }
 
