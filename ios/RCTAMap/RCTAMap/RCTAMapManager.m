@@ -476,20 +476,12 @@ RCT_EXPORT_METHOD(maxZoomLevel:(nonnull NSNumber *)reactTag :(RCTResponseSenderB
         key = [self generateKeyWithPrefix: @"Annot"];
     }
     if ([annotationConfig objectForKey: @"customView"]) {
-        NSDictionary *customViewProps = [annotationConfig objectForKey: @"customViewProps"];
-        
-        NSNumber *isToTop = [annotationConfig objectForKey: @"isToTop"];
         RCTCustomAnnotation *customAnno = [[RCTCustomAnnotation alloc] initWithKey: key
                                                                            coordinate: CLLocationCoordinate2DMake(latitude, longitude)];
         customAnno.customViewName = [annotationConfig objectForKey: @"customView"];
-        
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict addEntriesFromDictionary: customViewProps];
-        [dict setObject:isToTop forKey: @"isToTop"];
-        customAnno.customProps = dict;
+        customAnno.customProps = annotationConfig;
         [mapViewContainer.annotDict setObject: customAnno forKey: key];
         [mapViewContainer.mapView addAnnotation: customAnno];
-
     } else {
         NSString *title = [annotationConfig objectForKey:@"title"];
         NSString *imageName = [annotationConfig objectForKey: @"imageName"];
@@ -1207,13 +1199,19 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
     
     RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
     if ([view.annotation isKindOfClass: [RCTCustomAnnotation class]]) {
+        RCTCustomAnnotation *customAnno = view.annotation;
+        Boolean disableSelectable = [[customAnno.customProps objectForKey: @"disableSelectable"] boolValue];
+        if (disableSelectable) {
+            [mapView deselectAnnotation: view.annotation animated: YES];
+        } else {
+            [view setSelected: YES animated: YES];
+        }
         
-        [view setSelected: YES animated: YES];
         if (!mapViewContainer.onAnnotationClick) {
             return;
         }
 
-        RCTCustomAnnotation *customAnno = view.annotation;
+        
         mapViewContainer.onAnnotationClick(@{@"customViewProps": customAnno.customProps});    }
 }
 
