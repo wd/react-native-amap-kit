@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => package['repository']['url'] }
 
-  s.dependency 'AMap3DMap', '5.7.0'
-  s.dependency 'AMapLocation', '2.6.0'
-  s.dependency 'AMapSearch', '5.7.0'
+  s.dependency 'AMap3DMap', '6.6.0'
+  s.dependency 'AMapLocation', '2.6.1'
+  s.dependency 'AMapSearch', '6.6.0'
 end
