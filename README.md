@@ -90,6 +90,8 @@ $ react-native link react-native-amap-kit
 
 可以参考 [react-native-amap-kit-example](https://github.com/wd/react-native-amap-kit-example) 这个项目。
 
+iOS 里面最新的 AMAP sdk 和 code-push 会有符号冲突，`aes_decrypt_key128` 和 `aes_encrypt_key128`，我的做法是通过 patch-package 给 code-push 打一个补丁，把这两个函数改了一下名字。
+
 TBD.
 
 # 升级
