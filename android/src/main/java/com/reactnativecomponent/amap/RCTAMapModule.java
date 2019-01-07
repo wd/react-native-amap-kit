@@ -975,6 +975,10 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
             RegeocodeAddress address = regeocodeResult.getRegeocodeAddress();
             data.putString("district", address.getDistrict());
             data.putString("township", address.getTownship());
+            data.putString("city", address.getCity());
+            data.putString("formattedAddress", address.getFormatAddress());
+            data.putString("province", address.getProvince());
+            data.putString("neighborhood", address.getNeighborhood());
         } else {
             WritableMap error = Arguments.createMap();
             error.putString("code", String.valueOf(i));
