@@ -18,33 +18,28 @@ $ react-native link react-native-amap-kit
 ```
 
 ## iOS
-需要先配置 CocoaPods。然后在 `ios/Podfile` 里面添加下面两个设置
+### CocoaPods
+如果使用 CocoaPods。那么 link 会自动在 `ios/Podfile` 里面添加下面的设置
 
 ```
-    pod 'react-native-amap-kit', path: '../node_modules/react-native-amap-kit/ios'
+    pod 'react-native-amap-kit', path: '../node_modules/react-native-amap-kit'
 ```
-和
-```
-  installer.pods_project.targets.each do |target|
-    if target.name == 'Pods-RNAmapKitExample'
-      target.build_configurations.each do |config|
-        # fix amap
-        xcconfig_path = config.base_configuration_reference.real_path
-        build_settings = Hash[*File.read(xcconfig_path).lines.map{|x| x.split(/\s*=\s*/, 2)}.flatten]
-        build_settings['OTHER_LDFLAGS'][' -l"stdc++.6.0.9"'] = ''
-        File.open(xcconfig_path, "w") do |file|
-          build_settings.each do |key,value|
-            file.puts "#{key} = #{value}"
-          end
-        end
-      end
-    end
-  end
-```
+
 这里有一个例子 https://github.com/wd/react-native-amap-kit-example/blob/master/ios/Podfile 。
 
+之后执行 `pod install`。
+
+### 没有使用 CocoaPods
+如果没有使用，那 link 会自动给项目文件 `ios/XXXXX.xcodeproj/project.pbxproj` 增加配置，如果没有，那可能需要手动添加，找到对应目录拖到项目里面，具体就不多说了，推荐使用 pod 方式管理。
+
 ## Android
-不需要做其他事情了。
+link 会修改类似下面的三个文件，一般不需要做其他事情了。如果有问题，那查看 react-native 官方的帮助或者参考其他模块吧。
+
+` ` `
+        modified:   android/app/build.gradle
+        modified:   android/app/src/main/java/com/XXXXX/MainApplication.java
+        modified:   android/settings.gradle
+` ` `
 
 # 配置高德地图的 key
 
