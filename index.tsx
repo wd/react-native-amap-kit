@@ -103,10 +103,7 @@ export type AnnotationDragChangeEvent = NativeSyntheticEvent<{
         key: string;
         coordinate: CoordinateLong;
     }>
-export type AnnotationClickEvent = NativeSyntheticEvent<{
-        customViewProps: Marker;
-        index?: number
-    }>
+export type AnnotationClickEvent = NativeSyntheticEvent<Marker>
 
 export type InfoWindowClickEvent = NativeSyntheticEvent<{
         key: string
