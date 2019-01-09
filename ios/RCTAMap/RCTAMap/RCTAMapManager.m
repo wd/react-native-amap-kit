@@ -1212,7 +1212,7 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
         }
 
         
-        mapViewContainer.onAnnotationClick(@{@"customViewProps": customAnno.customProps});    }
+        mapViewContainer.onAnnotationClick(customAnno.customProps);    }
 }
 
 - (void)mapView:(MAMapView *)mapView didDeselectAnnotationView:(MAAnnotationView *)view {
