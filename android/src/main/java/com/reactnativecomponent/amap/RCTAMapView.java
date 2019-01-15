@@ -1,7 +1,9 @@
 package com.reactnativecomponent.amap;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -199,18 +201,25 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
         if (this.mapViewType == 1) {
             TEXTUREMAPVIEW = new TextureMapView(CONTEXT);
             TEXTUREMAPVIEW.setLayoutParams(PARAM);
-            TEXTUREMAPVIEW.onCreate(CONTEXT.getCurrentActivity().getIntent().getExtras());
+            TEXTUREMAPVIEW.onCreate(getSavedState());
             AMAP = TEXTUREMAPVIEW.getMap();
             setMapOptions();
             this.addView(TEXTUREMAPVIEW);
         } else {
             MAPVIEW = new MapView(CONTEXT);
             MAPVIEW.setLayoutParams(PARAM);
-            MAPVIEW.onCreate(CONTEXT.getCurrentActivity().getIntent().getExtras());
+            MAPVIEW.onCreate(getSavedState());
             AMAP = MAPVIEW.getMap();
             setMapOptions();
             this.addView(MAPVIEW);
         }
+    }
+
+    private Bundle getSavedState(){
+        if (CONTEXT != null && CONTEXT.getCurrentActivity() != null){
+            return CONTEXT.getCurrentActivity().getIntent().getExtras();
+        }
+        return new Bundle();
     }
 
 
@@ -374,12 +383,10 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
 
     @Override
     protected Parcelable onSaveInstanceState() {
-        if (CONTEXT.getCurrentActivity().getIntent() != null && CONTEXT.getCurrentActivity().getIntent().getExtras() != null) {
-            if (MAPVIEW != null) {
-                MAPVIEW.onSaveInstanceState(CONTEXT.getCurrentActivity().getIntent().getExtras());
-            } else {
-                TEXTUREMAPVIEW.onSaveInstanceState(CONTEXT.getCurrentActivity().getIntent().getExtras());
-            }
+        if (MAPVIEW != null) {
+            MAPVIEW.onSaveInstanceState(getSavedState());
+        } else {
+            TEXTUREMAPVIEW.onSaveInstanceState(getSavedState());
         }
         return super.onSaveInstanceState();
     }
