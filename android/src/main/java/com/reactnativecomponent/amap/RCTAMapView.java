@@ -364,9 +364,9 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
      * @return
      */
     private int getImageId(String fileName) {
-        int drawableId = CONTEXT.getCurrentActivity().getResources().getIdentifier(fileName, "drawable", CONTEXT.getPackageName());
+        int drawableId = CONTEXT.getResources().getIdentifier(fileName, "drawable", CONTEXT.getPackageName());
         if (drawableId == 0) {
-            drawableId = CONTEXT.getCurrentActivity().getResources().getIdentifier("splash", "drawable", CONTEXT.getPackageName());
+            drawableId = CONTEXT.getResources().getIdentifier("splash", "drawable", CONTEXT.getPackageName());
         }
 
         return drawableId;
@@ -625,134 +625,114 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
         return circle;
     }
     public void addCircle(final ReadableMap config) {
-        this.CONTEXT.getCurrentActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int strokeColor = Utils.parseColor(config.getString("strokeColor"));
-                int fillColor = Utils.parseColor(config.getString("fillColor"));
-                int lineWidth = config.getInt("lineWidth");
-                double radius = config.getDouble("radius");
-                ReadableMap coordinate = config.getMap("coordinate");
-                LatLng latLng;
-                if(coordinate.hasKey("latitude"))
-                    latLng = new LatLng(coordinate.getDouble("latitude"), coordinate.getDouble("longitude"));
-                else
-                    latLng = new LatLng(coordinate.getDouble("lat"), coordinate.getDouble("lng"));
+        int strokeColor = Utils.parseColor(config.getString("strokeColor"));
+        int fillColor = Utils.parseColor(config.getString("fillColor"));
+        int lineWidth = config.getInt("lineWidth");
+        double radius = config.getDouble("radius");
+        ReadableMap coordinate = config.getMap("coordinate");
+        LatLng latLng;
+        if(coordinate.hasKey("latitude"))
+            latLng = new LatLng(coordinate.getDouble("latitude"), coordinate.getDouble("longitude"));
+        else
+            latLng = new LatLng(coordinate.getDouble("lat"), coordinate.getDouble("lng"));
 
-                CircleOptions circleOption = new CircleOptions();
-                circleOption.strokeWidth(lineWidth);
-                circleOption.fillColor(fillColor);
-                circleOption.strokeColor(strokeColor);
-                circleOption.radius(radius);
-                circleOption.center(latLng);
-                addCircle(circleOption,config);
-            }
-        });
+        CircleOptions circleOption = new CircleOptions();
+        circleOption.strokeWidth(lineWidth);
+        circleOption.fillColor(fillColor);
+        circleOption.strokeColor(strokeColor);
+        circleOption.radius(radius);
+        circleOption.center(latLng);
+        addCircle(circleOption,config);
     }
     public void addPolygon(final ReadableMap config) {
-        this.CONTEXT.getCurrentActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int strokeColor = Utils.parseColor(config.getString("strokeColor"));
-                int lineWidth = config.getInt("lineWidth");
-                int fillColor = Utils.parseColor(config.getString("fillColor"));
+        int strokeColor = Utils.parseColor(config.getString("strokeColor"));
+        int lineWidth = config.getInt("lineWidth");
+        int fillColor = Utils.parseColor(config.getString("fillColor"));
 
-                ReadableArray coordinates = config.getArray("coordinates");
-                List<LatLng> latLngs = new ArrayList<>();
-                for(int i=0; i< coordinates.size(); i++) {
-                    ReadableMap point = coordinates.getMap(i);
-                    LatLng latLng;
-                    if(point.hasKey("latitude"))
-                        latLng = new LatLng(point.getDouble("latitude"), point.getDouble("longitude"));
-                    else
-                        latLng = new LatLng(point.getDouble("lat"), point.getDouble("lng"));
-                    latLngs.add(latLng);
-                }
+        ReadableArray coordinates = config.getArray("coordinates");
+        List<LatLng> latLngs = new ArrayList<>();
+        for(int i=0; i< coordinates.size(); i++) {
+            ReadableMap point = coordinates.getMap(i);
+            LatLng latLng;
+            if(point.hasKey("latitude"))
+                latLng = new LatLng(point.getDouble("latitude"), point.getDouble("longitude"));
+            else
+                latLng = new LatLng(point.getDouble("lat"), point.getDouble("lng"));
+            latLngs.add(latLng);
+        }
 
-                PolygonOptions polygonOptions = new PolygonOptions();
-                polygonOptions.strokeWidth(lineWidth);
-                polygonOptions.fillColor(fillColor);
-                polygonOptions.strokeColor(strokeColor);
-                polygonOptions.addAll(latLngs);
-                addPolygon(polygonOptions,config);
-            }
-        });
+        PolygonOptions polygonOptions = new PolygonOptions();
+        polygonOptions.strokeWidth(lineWidth);
+        polygonOptions.fillColor(fillColor);
+        polygonOptions.strokeColor(strokeColor);
+        polygonOptions.addAll(latLngs);
+        addPolygon(polygonOptions,config);
     }
     public void addPolyline(final ReadableMap config) {
-        this.CONTEXT.getCurrentActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                int strokeColor = Utils.parseColor(config.getString("strokeColor"));
-                int lineWidth = config.getInt("lineWidth");
+        int strokeColor = Utils.parseColor(config.getString("strokeColor"));
+        int lineWidth = config.getInt("lineWidth");
 
-                ReadableArray coordinates = config.getArray("coordinates");
-                List<LatLng> latLngs = new ArrayList<>();
-                for(int i=0; i< coordinates.size(); i++) {
-                    ReadableMap point = coordinates.getMap(i);
-                    LatLng latLng;
-                    if(point.hasKey("latitude"))
-                        latLng = new LatLng(point.getDouble("latitude"), point.getDouble("longitude"));
-                    else
-                        latLng = new LatLng(point.getDouble("lat"), point.getDouble("lng"));
-                    latLngs.add(latLng);
-                }
-                PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.color(strokeColor);
-                polylineOptions.width(lineWidth);
-                polylineOptions.addAll(latLngs);
-                addPolyline(polylineOptions,config);
-            }
-        });
+        ReadableArray coordinates = config.getArray("coordinates");
+        List<LatLng> latLngs = new ArrayList<>();
+        for(int i=0; i< coordinates.size(); i++) {
+            ReadableMap point = coordinates.getMap(i);
+            LatLng latLng;
+            if(point.hasKey("latitude"))
+                latLng = new LatLng(point.getDouble("latitude"), point.getDouble("longitude"));
+            else
+                latLng = new LatLng(point.getDouble("lat"), point.getDouble("lng"));
+            latLngs.add(latLng);
+        }
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.color(strokeColor);
+        polylineOptions.width(lineWidth);
+        polylineOptions.addAll(latLngs);
+        addPolyline(polylineOptions,config);
     }
     public void addMarkers(final ReadableMap config) {
-        this.CONTEXT.getCurrentActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ReadableMap point = config.getMap("coordinate");
-                String imgName = "";
-                if (config.hasKey("imageName")){
-                    imgName = config.getString("imageName");
-                }
+        ReadableMap point = config.getMap("coordinate");
+        String imgName = "";
+        if (config.hasKey("imageName")){
+            imgName = config.getString("imageName");
+        }
 
-                MarkerOptions markerOptions = new MarkerOptions();
-                if (config.hasKey("title")) {
-                    String title = config.getString("title");
-                    if(!title.isEmpty())
-                        markerOptions.title(title);
-                }
+        MarkerOptions markerOptions = new MarkerOptions();
+        if (config.hasKey("title")) {
+            String title = config.getString("title");
+            if(!title.isEmpty())
+                markerOptions.title(title);
+        }
 
-                if (config.hasKey("snippet")) {
-                    String snippet = config.getString("snippet");
-                    if(!snippet.isEmpty())
-                        markerOptions.snippet(snippet);
-                }
+        if (config.hasKey("snippet")) {
+            String snippet = config.getString("snippet");
+            if(!snippet.isEmpty())
+                markerOptions.snippet(snippet);
+        }
 
-                if(config.hasKey("angle")) {
-                    float angle = (float) config.getDouble("angle");
-                    markerOptions.rotateAngle(angle);
-                }
+        if(config.hasKey("angle")) {
+            float angle = (float) config.getDouble("angle");
+            markerOptions.rotateAngle(angle);
+        }
 
-                boolean draggable = false;
-                if(config.hasKey("draggable")) {
-                    draggable = config.getBoolean("draggable");
-                }
-                markerOptions.draggable(draggable);
+        boolean draggable = false;
+        if(config.hasKey("draggable")) {
+            draggable = config.getBoolean("draggable");
+        }
+        markerOptions.draggable(draggable);
 
-                boolean visible = true;
-                if(config.hasKey("visible")) {
-                    visible = config.getBoolean("visible");
-                }
-                markerOptions.visible(visible);
+        boolean visible = true;
+        if(config.hasKey("visible")) {
+            visible = config.getBoolean("visible");
+        }
+        markerOptions.visible(visible);
 
-                LatLng latLng;
-                if(point.hasKey("latitude"))
-                    latLng = new LatLng(point.getDouble("latitude"), point.getDouble("longitude"));
-                else
-                    latLng = new LatLng(point.getDouble("lat"), point.getDouble("lng"));
-                markerOptions.position(latLng);
-                addMarker(markerOptions, imgName, config);
-            }
-        });
+        LatLng latLng;
+        if(point.hasKey("latitude"))
+            latLng = new LatLng(point.getDouble("latitude"), point.getDouble("longitude"));
+        else
+            latLng = new LatLng(point.getDouble("lat"), point.getDouble("lng"));
+        markerOptions.position(latLng);
+        addMarker(markerOptions, imgName, config);
     }
 
     public void removeCircle(String key) {
@@ -949,17 +929,21 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
     }
 
     public void setRegion(final ReadableMap region) {
-        this.CONTEXT.getCurrentActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                setRegionConfig(region);
-            }}
-        );
+        setRegionConfig(region);
     }
 
     public void setRegionConfig(ReadableMap region){
         ReadableMap center = region.getMap("center");
-        double centerLat = center.getDouble("latitude");
-        double centerLng = center.getDouble("longitude");
+        double centerLat;
+        double centerLng;
+        if(center.hasKey("latitude")){
+            centerLat = center.getDouble("latitude");
+            centerLng = center.getDouble("longitude");
+        }else {
+            centerLat = center.getDouble("lat");
+            centerLng = center.getDouble("lng");
+        }
+
 
         double radius = region.getDouble("radius");
 
@@ -992,11 +976,7 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
     }
 
     public void setRegionByLatLngs(final ReadableMap region) {
-        CONTEXT.getCurrentActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                setRegionConfigByLatLngs(region);
-            }
-        });
+        setRegionConfigByLatLngs(region);
     }
     public void setRegionConfigByLatLngs(ReadableMap region){
         ReadableArray coordinates = region.getArray("coordinates");

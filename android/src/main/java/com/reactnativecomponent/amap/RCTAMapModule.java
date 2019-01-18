@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.amap.api.maps.AMapUtils.calculateLineDistance;
 
 public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSearch.OnPoiSearchListener, GeocodeSearch.OnGeocodeSearchListener {
@@ -76,9 +75,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setCenterCoordinate(final int reactTag, final ReadableMap coordinate) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
                 if (mapView == null) {
                     Log.d("AMAP", "mapView is null.");
                     return;
@@ -218,9 +217,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setRegionByLatLngs(final int reactTag, final ReadableMap region) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "setRegionByLatLngs: mapView is null.");
@@ -239,9 +238,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setLatLngZoom(final int reactTag, final ReadableMap config) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "setLatLngZoom: mapView is null.");
@@ -277,26 +276,25 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setRegion(final int reactTag, final ReadableMap region) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
-                                                        public void run() {
-                                                            final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+        mContext.runOnUiQueueThread(new Runnable() {
+            public void run() {
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
-                                                            if (mapView == null) {
-                                                                Log.d("AMAP", "setRegion: mapView is null.");
-                                                                return;
-                                                            }
+                if (mapView == null) {
+                    Log.d("AMAP", "setRegion: mapView is null.");
+                    return;
+                }
 
-                                                            mapView.setRegionConfig(region);
-                                                        }
-                                                    }
-        );
+                mapView.setRegionConfig(region);
+            }
+        });
     }
 
     @ReactMethod
     public void minZoomLevel(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "minZoomLevel: mapView is null.");
@@ -310,9 +308,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void maxZoomLevel(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "maxZoomLevel: mapView is null.");
@@ -326,9 +324,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void zoomLevel(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "zoomLevel: mapView is null.");
@@ -386,9 +384,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addAnnotation(final int reactTag, final ReadableMap config, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addAnnotation: mapView is null.");
@@ -403,9 +401,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addAnnotations(final int reactTag, final ReadableArray configs, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addAnnotations: mapView is null.");
@@ -424,9 +422,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeAnnotation(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removeAnnotation: mapView is null.");
@@ -440,9 +438,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeAnnotations(final int reactTag, final ReadableArray keys) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removeAnnotation: mapView is null.");
@@ -458,9 +456,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeAllAnnotations(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addAnnotation: mapView is null.");
@@ -475,9 +473,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void showInfoWindow(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "showInfoWindow: mapView is null.");
@@ -490,9 +488,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void hideInfoWindow(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "hideInfoWindow: mapView is null.");
@@ -505,9 +503,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void showAnnotation(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "showAnnotation: mapView is null.");
@@ -521,9 +519,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void hideAnnotation(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "hideAnnotation: mapView is null.");
@@ -536,9 +534,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void showAnnotations(final int reactTag, final ReadableArray keys) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "showAnnotations: mapView is null.");
@@ -554,9 +552,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void hideAnnotations(final int reactTag, final ReadableArray keys) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "hideAnnotations: mapView is null.");
@@ -595,9 +593,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addCircle(final int reactTag, final ReadableMap config, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addCircle: mapView is null.");
@@ -611,9 +609,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addCircles(final int reactTag, final ReadableArray configs, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addCircles: mapView is null.");
@@ -633,9 +631,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeCircle(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removeCircle: mapView is null.");
@@ -649,9 +647,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeCircles(final int reactTag, final ReadableArray circles) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removeCircles: mapView is null.");
@@ -667,9 +665,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeAllCircles(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removeCircles: mapView is null.");
@@ -707,9 +705,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addPolylines(final int reactTag, final ReadableArray configs, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addPolylines: mapView is null.");
@@ -728,9 +726,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addPolyline(final int reactTag, final ReadableMap config, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addPolyline: mapView is null.");
@@ -745,9 +743,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removePolyline(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removePolyline: mapView is null.");
@@ -761,9 +759,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removePolylines(final int reactTag, final ReadableArray keys) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removePolyline: mapView is null.");
@@ -779,9 +777,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeAllPolylines(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removePolyline: mapView is null.");
@@ -823,9 +821,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addPolygon(final int reactTag, final ReadableMap config, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addPolygon: mapView is null.");
@@ -840,9 +838,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void addPolygons(final int reactTag, final ReadableArray configs, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "addPolygons: mapView is null.");
@@ -861,9 +859,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removePolygon(final int reactTag, final String key) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removePolygon: mapView is null.");
@@ -877,9 +875,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removePolygons(final int reactTag, final ReadableArray keys) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removePolygons: mapView is null.");
@@ -895,9 +893,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void removeAllPolygons(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "removePolygons: mapView is null.");
@@ -912,9 +910,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void userLocation(final int reactTag, final Callback callback) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "userLocation: mapView is null.");
@@ -926,9 +924,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setMapType(final int reactTag, final int mapType) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "setMapType: mapView is null.");
@@ -942,9 +940,9 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void movieToUserLocation(final int reactTag) {
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             public void run() {
-                final RCTAMapView mapView = ((RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag));
+                final RCTAMapView mapView = getMapViewById(reactTag);
 
                 if (mapView == null) {
                     Log.d("AMAP", "movieToUserLocation: mapView is null.");
@@ -998,7 +996,11 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void printCurrentMapShot(final int reactTag) {
-        RCTAMapView rctaMapView = (RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag);
+        RCTAMapView rctaMapView = getMapViewById(reactTag);
+        if (rctaMapView == null) {
+            Log.d("AMAP", "movieToUserLocation: mapView is null.");
+            return;
+        }
         rctaMapView.getAMAP().getMapScreenShot(new AMap.OnMapScreenShotListener() {
             @Override
             public void onMapScreenShot(final Bitmap bitmap) {
@@ -1017,10 +1019,14 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setBearing(final int reactTag, final float bearing){
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             @Override
             public void run() {
-                RCTAMapView mapView = (RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag);
+                RCTAMapView mapView = getMapViewById(reactTag);
+                if (mapView == null) {
+                    Log.d("AMAP", "movieToUserLocation: mapView is null.");
+                    return;
+                }
                 mapView.getAMAP().animateCamera(CameraUpdateFactory.changeBearing(bearing));
             }
         });
@@ -1028,13 +1034,23 @@ public class RCTAMapModule extends ReactContextBaseJavaModule implements PoiSear
 
     @ReactMethod
     public void setTilt(final int reactTag, final float tilt){
-        mContext.getCurrentActivity().runOnUiThread(new Runnable() {
+        mContext.runOnUiQueueThread(new Runnable() {
             @Override
             public void run() {
-                RCTAMapView mapView = (RCTAMapView) mContext.getCurrentActivity().findViewById(reactTag);
+                RCTAMapView mapView = getMapViewById(reactTag);
+                if (mapView == null) {
+                    Log.d("AMAP", "movieToUserLocation: mapView is null.");
+                    return;
+                }
                 mapView.getAMAP().animateCamera(CameraUpdateFactory.changeTilt(tilt));
             }
         });
+    }
+
+    public RCTAMapView getMapViewById(int id){
+        if (mContext != null && mContext.getCurrentActivity() != null)
+            return mContext.getCurrentActivity().findViewById(id);
+        return null;
     }
 
 }
