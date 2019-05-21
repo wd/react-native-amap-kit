@@ -1196,23 +1196,21 @@ RCT_EXPORT_METHOD(reGoecodeSearch:(NSDictionary *)params) {
 }
 
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
-    
     RCTAMap *mapViewContainer = (RCTAMap *)mapView.superview;
+    RCTCustomAnnotation *customAnno = view.annotation;
     if ([view.annotation isKindOfClass: [RCTCustomAnnotation class]]) {
-        RCTCustomAnnotation *customAnno = view.annotation;
         Boolean disableSelectable = [[customAnno.customProps objectForKey: @"disableSelectable"] boolValue];
         if (disableSelectable) {
             [mapView deselectAnnotation: view.annotation animated: YES];
         } else {
             [view setSelected: YES animated: YES];
         }
-        
-        if (!mapViewContainer.onAnnotationClick) {
-            return;
-        }
-
-        
-        mapViewContainer.onAnnotationClick(customAnno.customProps);    }
+    }
+    
+    if (!mapViewContainer.onAnnotationClick) {
+        return;
+    }
+    mapViewContainer.onAnnotationClick(customAnno.customProps);
 }
 
 - (void)mapView:(MAMapView *)mapView didDeselectAnnotationView:(MAAnnotationView *)view {
