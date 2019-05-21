@@ -249,9 +249,6 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
         AMAP.setOnMarkerClickListener(this);
         AMAP.setOnInfoWindowClickListener(this);
 
-        if(this.infoWindowObj != null)
-            AMAP.setInfoWindowAdapter(this); //自定义的 infoWindow
-
         // 一些初始化的时候设定的数据，需要在此完成，因为设定的时候还没有初始化地图
         setCustomMapStylePath();
         setZoomLevel();
@@ -905,6 +902,8 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
 
         try {
             this.infoWindowObj = new RCTInfoWindow(CONTEXT, className);
+            if(this.infoWindowObj != null)
+                AMAP.setInfoWindowAdapter(this); //自定义的 infoWindow
         } catch (Exception e) {
             e.printStackTrace();
         }
