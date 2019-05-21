@@ -87,7 +87,7 @@ link 会修改类似下面的三个文件，一般不需要做其他事情了。
 
 iOS 里面最新的 AMAP sdk 和 code-push 会有符号冲突，`aes_decrypt_key128` 和 `aes_encrypt_key128`，我的做法是通过 patch-package 给 code-push 打一个补丁，把这两个函数改了一下名字。
 
-TBD.
+具体做法可以参考这里 https://wdicc.com/amap-work-with-code-push/ 。
 
 # 升级
 
