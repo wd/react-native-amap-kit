@@ -274,6 +274,9 @@ public class RCTAMapView extends FrameLayout implements AMapLocationListener,
         WritableMap dataMap = Arguments.createMap();
         dataMap.putString("key", marker.getId());
 
+        WritableMap config = Arguments.createMap();
+        config.merge(markerHelper.getShapeConfig(marker.getId()));
+        dataMap.putMap("config", config);
         WritableMap position = Arguments.createMap();
         position.putDouble("latitude", marker.getPosition().latitude);
         position.putDouble("longitude", marker.getPosition().longitude);
